@@ -18,10 +18,12 @@ import io.netty.handler.timeout.IdleStateHandler;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 基于netty的一个心跳监测机制，
+ * 主要使用了IdleStateHandler以及重写了userEventTriggered方法
  * @author haitao.chen
  * @date 2020/4/14
  */
-public class HeartBeatServer {
+public class HeartBeatNettyServer {
 
     public static void main(String[] args) {
 

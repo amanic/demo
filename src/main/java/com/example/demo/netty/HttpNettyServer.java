@@ -50,19 +50,21 @@ public class HttpNettyServer {
                                     @Override
                                     protected void channelRead0(ChannelHandlerContext ctx, HttpObject msg) throws Exception {
                                         if (msg instanceof HttpRequest) {
+                                            HttpRequest httpRequest = (HttpRequest) msg;
+                                            if ("/favicon.ico".equals(new URI(httpRequest.uri()).getPath())) {
+                                                return;
+                                            }
                                             System.out.println("客户端地址：" + ctx.channel().remoteAddress());
+                                            System.out.println("ctx = " + System.identityHashCode(ctx));
+                                            System.out.println("ctx.channel() = " + System.identityHashCode(ctx.channel()));
+                                            System.out.println("this = "+System.identityHashCode(this));
+                                            ByteBuf content = Unpooled.copiedBuffer("我是一个netty的http服务器", CharsetUtil.UTF_8);
+                                            DefaultFullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, content);
+                                            response.headers().set(HttpHeaderNames.CONTENT_TYPE, "text/plain");
+                                            response.headers().set(HttpHeaderNames.CONTENT_LENGTH, content.readableBytes());
+                                            response.headers().set(HttpHeaderNames.ACCEPT_CHARSET, CharsetUtil.UTF_8);
+                                            ctx.writeAndFlush(response);
                                         }
-
-                                        HttpRequest httpRequest = (HttpRequest) msg;
-                                        if ("favcion.icon".equals(new URI(httpRequest.uri()).getPath())) {
-                                            return;
-                                        }
-                                        ByteBuf content = Unpooled.copiedBuffer("我是一个netty的http服务器", CharsetUtil.UTF_8);
-                                        DefaultFullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, content);
-                                        response.headers().set(HttpHeaderNames.CONTENT_TYPE, "text/plain");
-                                        response.headers().set(HttpHeaderNames.CONTENT_LENGTH, content.readableBytes());
-                                        response.headers().set(HttpHeaderNames.ACCEPT_CHARSET, CharsetUtil.UTF_8);
-                                        ctx.writeAndFlush(response);
                                     }
                                 });
                     }
