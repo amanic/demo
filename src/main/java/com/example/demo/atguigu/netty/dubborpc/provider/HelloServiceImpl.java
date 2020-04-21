@@ -1,8 +1,9 @@
 package com.example.demo.atguigu.netty.dubborpc.provider;
 
-import com.atguigu.netty.dubborpc.publicinterface.HelloService;
 
-public class HelloServiceImpl implements HelloService{
+import com.example.demo.atguigu.netty.dubborpc.publicinterface.HelloService;
+
+public class HelloServiceImpl implements HelloService {
 
     private static int count = 0;
     //当有消费方调用该方法时， 就返回一个结果
