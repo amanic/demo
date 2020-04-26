@@ -1,5 +1,6 @@
 package com.example.demo.conf;
 
+import com.example.demo.spring.Person;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -18,4 +19,10 @@ public class ConfigurationBean {
     public People me(){
         return new People();
     }
+
+    @Bean
+    public Person person(){
+        return new Person();
+    }
+
 }
