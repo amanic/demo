@@ -1,5 +1,6 @@
 package com.example.demo.spring;
 
+import com.alibaba.fastjson.JSON;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.PropertyValues;
 import org.springframework.beans.factory.config.InstantiationAwareBeanPostProcessor;
@@ -23,23 +24,38 @@ public class MyInstantiationAwareBeanPostProcessor implements InstantiationAware
         if (beanName.equals("person")) {
             System.out
                     .println("InstantiationAwareBeanPostProcessor调用postProcessBeforeInstantiation方法beanClass = " + beanClass.getName() + "beanName = " + beanName);
+//            return new Person();
         }
         return null;
     }
 
     // 接口方法、实例化Bean之后调用
+//    @Override
+//    public Object postProcessAfterInitialization(Object bean, String beanName)
+//            throws BeansException {
+//        if (beanName.equals("person")) {
+//            System.out
+//                    .println("InstantiationAwareBeanPostProcessor调用postProcessAfterInitialization方法 bean = " + bean.getClass().getName() + "beanName = " + beanName);
+//        }
+//        return bean;
+//    }
+
     @Override
-    public Object postProcessAfterInitialization(Object bean, String beanName)
-            throws BeansException {
+    public boolean postProcessAfterInstantiation(Object bean, String beanName) throws BeansException {
         if (beanName.equals("person")) {
             System.out
-                    .println("InstantiationAwareBeanPostProcessor调用postProcessAfterInitialization方法 bean = " + bean.getClass().getName() + "beanName = " + beanName);
+                    .println("InstantiationAwareBeanPostProcessor调用postProcessAfterInstantiation方法 bean = " + bean.getClass().getName() + "beanName = " + beanName);
         }
-        return bean;
+        return true;
     }
 
     @Override
     public PropertyValues postProcessPropertyValues(PropertyValues pvs, PropertyDescriptor[] pds, Object bean, String beanName) throws BeansException {
+
+        if (beanName.equals("person")) {
+            System.out
+                    .println("InstantiationAwareBeanPostProcessor调用postProcessPropertyValues方法 bean = " + bean.getClass().getName() + "beanName = " + beanName);
+        }
         return null;
     }
 
