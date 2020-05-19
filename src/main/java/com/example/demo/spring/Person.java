@@ -15,6 +15,7 @@ public class Person implements BeanFactoryAware, BeanNameAware,
     private String address;
     private int phone;
 
+
     private BeanFactory beanFactory;
     private String beanName;
 
