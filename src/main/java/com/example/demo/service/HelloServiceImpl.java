@@ -32,6 +32,12 @@ public class HelloServiceImpl implements HelloService{
         log.info("end executeAsync");
     }
 
+    @Override
+    public String testAop(String param) {
+        System.out.println("执行");
+        return param;
+    }
+
     public static void main(String[] args) {
 
         Callable<Integer> callable = new Callable<Integer>() {

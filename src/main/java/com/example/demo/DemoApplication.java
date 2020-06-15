@@ -11,7 +11,7 @@ import java.util.Optional;
 import java.util.ServiceLoader;
 import java.util.stream.StreamSupport;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.example.demo")
 public class DemoApplication {
 
     public static void main(String[] args) {

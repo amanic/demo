@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 import java.beans.PropertyDescriptor;
 
-@Configuration
+//@Configuration
 public class MyInstantiationAwareBeanPostProcessor implements InstantiationAwareBeanPostProcessor {
 
     public MyInstantiationAwareBeanPostProcessor() {

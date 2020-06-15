@@ -2,10 +2,9 @@ package com.example.demo.controller;
 
 import com.example.demo.service.HelloService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.annotation.Resource;
 
 /**
  * @author haitao.chen
@@ -16,15 +15,21 @@ import javax.annotation.Resource;
 public class HelloController {
 
 
-    @Resource
+    @Autowired
     private HelloService helloService;
 
     @RequestMapping("test")
-    public String test(){
+    public String test() {
         log.info("HelloController.test start");
         helloService.executeAsync();
         log.info("HelloController.test end");
         return "success";
+    }
+
+
+    @RequestMapping("test1")
+    public String test1() {
+        return helloService.testAop("1123141");
     }
 
 
