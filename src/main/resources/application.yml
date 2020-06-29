@@ -8,7 +8,7 @@ server:
 spring:
   mail:
     host: smtp.exmail.qq.com
-    username: xlscxggfc@beibei.com
+    username: 发送者的邮箱
     password: wefwf234
     properties:
       mail:
@@ -18,7 +18,7 @@ spring:
             enable: true
             required: true
     default-encoding: UTF-8
-    default-cc: bingbing.lu@beibei.com,xiaodong.xue@beibei.com
+    default-cc: 默认邮箱
   #freemarker
   freemarker:
     cache: false
