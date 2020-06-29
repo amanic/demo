@@ -42,7 +42,7 @@ public class NpsMailBizService {
             String text = FreeMarkerTemplateUtils.processTemplateIntoString(template, paramsMap);
 
             String subject = "【超级清仓】副条码下架提醒";
-            String[] mailList = new String[]{"haitao.chen@beibei.com"};
+            String[] mailList = new String[]{"接受者的邮箱"};
             MailInfo mailInfo = MailInfo.builder().content(text).subject(subject).toAddress(mailList).build();
 
             bosMailService.sendMailNewRetail(mailInfo);
