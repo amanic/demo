@@ -45,6 +45,11 @@ public class HelloServiceImpl implements HelloService{
         return param;
     }
 
+    public String dosth(){
+        System.out.println("```");
+        return "。";
+    }
+
     public static void main(String[] args) {
 
         Callable<Integer> callable = new Callable<Integer>() {

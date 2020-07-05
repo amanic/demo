@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SurvivalClamProcessor implements Runnable {
 
+    @LockAnnotation
     public static void main(String[] args) {
         SurvivalClamProcessor survivalClamProcessor
                 = new SurvivalClamProcessor(lockField, lockKey, randomValue, lockTime);

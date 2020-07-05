@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.service.HelloService;
+import com.example.demo.service.HelloServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +17,7 @@ public class HelloController {
 
 
     @Autowired
-    private HelloService helloService;
+    private HelloServiceImpl helloService;
 
     @RequestMapping("test")
     public String test() {
@@ -29,7 +30,7 @@ public class HelloController {
 
     @RequestMapping("test1")
     public String test1() {
-        return helloService.testAop("1123141");
+        return helloService.dosth();
     }
 
 
