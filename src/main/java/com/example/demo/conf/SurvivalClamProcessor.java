@@ -8,17 +8,18 @@ public class SurvivalClamProcessor implements Runnable {
     @LockAnnotation
     public static void main(String[] args) {
         SurvivalClamProcessor survivalClamProcessor
-                = new SurvivalClamProcessor(lockField, lockKey, randomValue, lockTime);
+                = new SurvivalClamProcessor("lockField", "lockKey", "randomValue", Integer.valueOf("lockTime"));
         Thread survivalThread = new Thread(survivalClamProcessor);
         survivalThread.setDaemon(Boolean.TRUE);
         survivalThread.start();
-        Object returnObject = joinPoint.proceed(args);
+        Object returnObject = new Object();
+//        returnObject = joinPoint.proceed(args);
         survivalClamProcessor.stop();
         survivalThread.interrupt();
-        return returnObject;
     }
 
     private static final int REDIS_EXPIRE_SUCCESS = 1;
+    private static final CacheUtils cacheUtils = new CacheUtils();
 
     SurvivalClamProcessor(String field, String key, String value, int lockTime) {
         this.field = field;

@@ -1,6 +1,7 @@
 package com.example.demo.conf;
 
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -13,7 +14,6 @@ import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ObjectUtils;
 
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -23,10 +23,8 @@ import java.util.stream.Collectors;
 @Slf4j
 public class LockAspect {
 
-    private static final String REDIS_SET_SUCCESS = "OK";
+    private static final CacheUtils cacheUtils = new CacheUtils();
 
-    @Resource
-    private CacheUtils cacheUtils;
 
     @Around("@annotation(lockAnnotation)")
     public Object lockAround(ProceedingJoinPoint joinPoint, LockAnnotation lockAnnotation) throws Throwable {
@@ -54,7 +52,7 @@ public class LockAspect {
                 if (this.getLock(lockField, lockKey, randomValue, lockTime)) {
                     if (log.isInfoEnabled()) {
                         log.info("获得锁成功,方法名为{},参数为{}", joinPoint.getSignature(),
-                                String.join("-", Lists.newArrayList(args).stream().map(obj -> JSONObject.toJSONString(ObjectUtils.defaultIfNull(obj, "null")))
+                                String.join("-", Lists.newArrayList(args).stream().map(obj -> JSONObject.toJSONString(obj))
                                         .collect(Collectors.toList())));
                     }
                     Object returnObject = joinPoint.proceed(args);
@@ -63,7 +61,7 @@ public class LockAspect {
                 int sleepTime = Math.min(300, waitTime * 100);
                 if (log.isDebugEnabled()) {
                     log.debug("当前无法获得锁,本次等待{}ms,方法名为{},参数为{}", sleepTime, joinPoint.getSignature(),
-                            String.join("-", Lists.newArrayList(args).stream().map(obj -> JSONObject.toJSONString(ObjectUtils.defaultIfNull(obj, "null")))
+                            String.join("-", Lists.newArrayList(args).stream().map(obj -> JSONObject.toJSONString(obj))
                                     .collect(Collectors.toList())));
                 }
                 Thread.sleep(sleepTime);
@@ -77,5 +75,9 @@ public class LockAspect {
         } finally {
             cacheUtils.delLock(lockField, lockKey, randomValue);
         }
+    }
+
+    private boolean getLock(String lockField, String lockKey, String randomValue, int lockTime) {
+        return false;
     }
 }
